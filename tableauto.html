@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态生成标签</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="show">
+        <div id="c0_header">
+
+        </div>
+        <div id="c0_body">
+
+        </div>
+    </div>
+</body>
+<script>
+
+    function textLeft(text) {
+        var lab = document.createElement('label');
+        var txt = text + ':';
+        lab.innerText = txt;
+        //样式
+        return lab;
+    }
+    // {'row11':{name:'关键字',value:'搜索'}}
+    function searchInput(text) {
+        var s_input = document.createElement('input');
+        s_input.setAttribute('type','text');
+        s_input.setAttribute('placeholder',text);
+        return s_input;
+    }
+
+    function createlines(id,datas) {
+        //创建外层
+        var ul_wrapper = document.createElement('ul');
+        var li_row = document.createElement('li');
+        var ul_row = document.createElement('ul');
+        for(var i = 0; i < 3; i++){
+            var col = document.createElement('li');
+            if(0 == i){
+                var lab = textLeft(datas['row11']['name']);
+                var input = searchInput(datas['row11']['val']);
+                col.appendChild(lab);
+                col.appendChild(input);
+            }else if(1 == i){
+                var sbtn = document.createElement('button');
+                var abtn = document.createElement('button');
+                sbtn.innerText = '搜索';
+                abtn.innerText = '添加';
+                col.appendChild(sbtn);
+                col.appendChild(abtn); 
+            }else{
+                col.style.display = 'none';
+            }
+            ul_row.appendChild(col);
+        }
+        li_row.appendChild(ul_row);
+        ul_wrapper.appendChild(li_row);
+        
+        document.getElementById(id).appendChild(ul_wrapper);
+
+    }
+    
+    // var dd ={datas:
+    //     [
+    //         {row:{name:1,val1:2}},
+    //         {row:{ name: 1, val1: 2}},
+    //         { row: { name: 1, val1: 2 } },
+    //         { row21: { name: 1, val1: 2 } }
+    //     ]
+    // };
+    // dd['datas'][2]['row13']['val1']
+    // i*j = 所有的单元格
+    // [0,1,2,3,4,5,6,7]
+    //  i j  i*n + j*m = 0
+    //  i*3  +j = 0
+    function createCols(id,data) {
+        var cols = data['datas'].length;
+        var rows = Math.ceil(cols/3);
+        var ul_wrapper = document.createElement('ul');
+        for(var i = 0 ;i < rows ; i++){
+            (function(num){
+                var li_row = document.createElement('li');
+                var ul_row = document.createElement('ul');
+                for(var j = 0;j < 3; j++){
+                    var col = document.createElement('li');
+                    col.style.float = 'left';
+                    
+                    if ((num*3+j) < cols){
+                        var text = textLeft(data['datas'][num * 3 + j]['row']['name']);
+                        var input = searchInput(data['datas'][num * 3 + j]['row']['val']);
+                        col.appendChild(text);
+                        col.appendChild(input);
+                    }else{
+                        col.style.display = 'none';
+                    }
+                    
+                    ul_row.appendChild(col);
+                }
+                ul_row.style.overflow = 'hidden';
+                ul_row.style.border = '1px solid red';
+                li_row.appendChild(ul_row);
+                ul_wrapper.appendChild(li_row);
+            })(i);
+        }
+        document.getElementById(id).appendChild(ul_wrapper);
+
+
+
+    }
+    function createHeader(lines,id,datas) {
+        switch (lines) {
+            case 1:
+                {
+                    //创建 ul 
+                    createlines(id,datas);
+                    break;
+                }
+            case 0:
+            default:
+                {
+                    createCols(id,datas);
+                }
+                break;
+        }
+    }
+    function initEl() {
+        // var dd = {row11:{name:'关键字',val:'搜索'}};
+        // createHeader(1,'c0_header',dd);
+        var dd = {
+            datas:[
+                {row:{name:'关键字1',val:'搜索'}},
+                {row:{name:'关键字2',val:'搜索'}},
+                {row:{name:'关键字3',val:'搜索'}},
+                {row:{name:'关键字4',val:'搜索'}},
+                {row:{name:'关键字5',val:'搜索'}}
+            ]
+        }
+        // createCols('c0_header', dd);
+        createHeader(0, 'c0_header', dd);
+    }
+    window.onload = initEl;
+    console.log(7%3,3%3,4%3,6%3,9%3);//
+    console.log(Math.ceil(7/3));
+    console.log(Math.ceil(5/3));
+</script>
+</html>

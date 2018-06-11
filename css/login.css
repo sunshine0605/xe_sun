@@ -1,0 +1,72 @@
+@charset 'utf-8';
+
+
+/* 设置登录区域  begin*/
+.xe-main {
+    background: url('../sources/images/bgi.jpg') no-repeat; 
+    height: 600px;
+    background-size: 100% 600px;
+    min-width: 960px;
+}
+
+.main-box {
+    height: 560px;
+    margin: 0 auto;
+    padding-top: 140px;
+    width: 960px;
+    /* background: #fff; */
+}
+
+.login-box {
+    background: #fff;
+    height: 260px;
+    box-shadow: #666 0 0 3px;
+    margin-left: 710px;
+    width: 240px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.login-box > h3 {
+    color: #2887d7;
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+/* #login_menu > li {
+    padding: 5px 0;
+    height: 36px;
+} */
+/* #login_menu >li:nth-child(0) input{
+
+} */
+
+#u_name,#u_password {
+    height: 20px;
+    padding: 8px 0px;
+    margin-bottom: 10px;
+    width: 90%;
+    font-size: 18px;
+    color: #666;
+    outline: none;
+    text-indent: 30px;
+}
+
+.verify-code {
+    float: right;
+    margin-right: 20px;
+}
+.verify-input-area {
+    width: 100px!important;
+}
+.varify-input-code {
+    height: 28px !important;
+
+}
+.verify-change-area {
+    display: none;
+}
+
+
+/* 设置登录区域 end */

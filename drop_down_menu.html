@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生JS下拉菜单</title>
+</head>
+<body>
+    <div class="nav-header">
+        <ul id="navigation">
+            <li>
+                <input id="u_input" type="text" placeholder="请输入文字">
+                <ul class="items">
+                    <li><a href="javascript:void(0);">栏目1</a></li>
+                    <li><a href="javascript:void(0);">栏目2</a></li>
+                    <li><a href="javascript:void(0);">栏目3</a></li>
+                    <li><a href="javascript:void(0);">栏目4</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+
+    function initUI() {
+        var items = document.getElementsByClassName('items');
+        items[0].style.display = 'none';
+        var input_el = document.getElementById('u_input');
+        var as = items[0].getElementsByTagName('a');
+        for(var index = 0;index < as.length;index++){
+            as[index].onclick = function(){
+                input_el.value = this.innerText;
+                var pre_el = this.parentNode.parentNode;
+                pre_el.style.display = 'none';
+            }
+        }
+    }
+
+    window.onload = initUI;
+
+    var li_el = document.getElementById('navigation').getElementsByTagName('li')[0];
+    li_el.addEventListener('mouseover',function(){
+        var ul_el = this.getElementsByTagName('ul')[0];
+        ul_el.style.display = 'block';
+    },true);
+    li_el.addEventListener('mouseout',function(){
+        var ul_el = this.getElementsByTagName('ul')[0];
+        ul_el.style.display = 'none';
+    },true);
+
+
+</script>
+</html>

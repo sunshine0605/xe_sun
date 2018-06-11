@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取本地json数据</title>
+</head>
+<body>
+    <button>获取本地json数据</button>
+    <div id="show"></div>
+</body>
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script>
+    function initUI() {
+        
+        // $('button').eq(0).click(function(){
+        //     var path = 'http://127.0.0.1:8000/datas.json';
+        //     $.getJSON(path,function(data) {
+        //         console.log(data);
+        //     });
+        // });
+        
+        var btn = document.getElementsByTagName('button')[0];
+        btn.onclick = function () {
+            var xhr = null;
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else {//ie5 6
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            var path = 'http://127.0.0.1:8885/getdata';
+            xhr.open('GET',path,true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                //请求完成
+                if (4 == xhr.readyState) {
+                    //200为数据成功返回,响应状态码
+                    if (200 == xhr.status) {
+                        // alert(xhr.responseText);
+                        var show_p = document.getElementById('show');
+                        show_p.innerText = JSON.parse(xhr.responseText);
+                        console.log(JSON.parse(xhr.responseText));
+                    }
+                }
+            }
+
+        }
+    }
+    window.onload = initUI;
+</script>
+</html>

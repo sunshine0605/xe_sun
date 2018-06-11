@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生JS Ajax 获取JSON数据</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <style>
+
+        #show {
+            border: 1px solid red;
+            height: 100%;
+            min-width: 1024px;
+            
+        }
+
+        #show > ul {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #show > ul > li {
+            float: left;
+            line-height: 40px;
+            text-align: center;
+            height: 40px;
+            /* border: 1px solid yellow; */
+            background: #fff;
+        }
+
+        #show > ul > li:nth-child(1),#show > ul > li:nth-child(3){
+            width: 5%;
+        }
+        #show > ul > li:nth-child(2),#show > ul > li:nth-child(5){
+            width: 10%;
+        }
+        #show > ul > li:nth-child(4),#show > ul > li:nth-child(6){
+            width: 20%;
+        }
+        #show > ul > li:nth-child(7){
+            width: 30%;
+            
+        }
+
+        #show > ul > li > a{
+            color: #fff;
+            background: #666;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            margin-left: 1px;
+        }
+        
+        #content > ul {
+            overflow: hidden;
+        }
+        #content > ul > li {
+            float: left;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <button>GET请求JSON数据</button>
+    <div id="show"></div>
+</body>
+<script>
+
+    function createList(id,tdata){
+        var wrapper = document.getElementById(id);
+        var t_head = document.createElement('ul');
+        for(var i = 0; i < tdata.length; i++){
+            var rol = document.createElement('li');
+            var a_el = document.createElement('a');
+            a_el.innerText = tdata[i];
+            a_el.setAttribute('href','javascript:void(0);');
+            rol.appendChild(a_el);
+            t_head.appendChild(rol);
+        }
+        wrapper.appendChild(t_head);
+        var content = document.createElement('div');
+        content.setAttribute('id','content');
+        wrapper.appendChild(content);
+
+    }
+
+    function addrow(id,data){
+        console.log('before:',data);
+        var row = document.createElement('ul');
+        data.unshift('1111');
+        console.log(data);
+        for(var i = 0;i < data.length;i++){
+            var col = document.createElement('li');
+            var a_el = document.createElement('a');
+            console.log(data[i]);
+            a_el.innerText = data[i];
+            a_el.setAttribute('href','javascript:void(0);');
+            col.appendChild(a_el);
+            row.appendChild(col);
+        }
+        document.getElementById(id).appendChild(row);
+    }
+
+
+    //1.1首先要获取数据 服务器数据
+    // 1.2 使用 原生JS中的Ajax技术（无刷新技术)
+    function initUI(){
+        var btn = document.getElementsByTagName('button')[0];
+        btn.onclick = function(){
+            // 1.3 声明一个原生JS Ajax对象
+            var xhr = null;
+            if(window.XMLHttpRequest){//主流浏览器自带
+                xhr = new XMLHttpRequest();
+            }else{//ie 5 6
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            //1.4配置请求
+            var url = 'http://127.0.0.1:8885/getdata';
+            xhr.open('GET',url,true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (4 == xhr.readyState){
+                    if(200 == xhr.status){
+                        // console.log(xhr.responseText);
+                        //uname uid time openBank uidnumber zhanghao
+                        var obj = JSON.parse(xhr.responseText);
+                        // console.log(obj);
+                        for(var i = 0; i < obj.length;i++){
+                            var item = obj[i];
+                            var dd = [];
+                            dd.push(item['uid']);
+                            dd.push(item['uname']);
+                            dd.push(item['uidnumber']);
+                            dd.push(item['openBank']);
+                            dd.push(item['zhanghao']);
+                            dd.push(item['time']);
+                            console.log(dd);
+                            addrow('content',dd);
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+        //2 动态添加数据
+        var dd = ['全选','用户id','客户名','身份证ID','开户行','卡号','开户时间'];
+        createList('show',dd);
+       
+
+    }
+    window.onload = initUI;
+</script>
+</html>
