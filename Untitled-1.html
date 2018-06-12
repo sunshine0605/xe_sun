@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <p>访问 JSON 内嵌对象。</p>
+
+    <p id="demo"></p>
+    
+    <script>
+    myObj = {
+      "name":"runoob",
+      "alexa":10000,
+      "sites": {
+        "site1":"www.runoob.com",
+        "site2":"m.runoob.com",
+        "site3":"c.runoob.com"
+      }
+    }
+    document.getElementById("demo").innerHTML=myObj["alexa"];
+    document.getElementById("demo").innerHTML += myObj.sites.site1 + "<br>";
+    // 或者
+    document.getElementById("demo").innerHTML += myObj.sites["site1"];
+    </script>
+    
+</body>
+</html>
